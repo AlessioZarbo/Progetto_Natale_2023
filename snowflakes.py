@@ -19,6 +19,8 @@ def main():
     x = 0.0
     y = 0.0
 
+    random = randint(0,1)
+
     w, h = pg.display.Info().current_w, pg.display.Info().current_h # //2 dopo current_w/h
     screen = pg.display.set_mode((w, h))    # Altezza schermo
 
@@ -31,14 +33,21 @@ def main():
     make_glass(background)  # Funzione che rende lo sfondo trasparente
 
     snow1 = pg.transform.scale_by(pg.image.load('snowflake1.svg'), 0.1) # Importiamo il primo fiocco di neve
+    snow2 = pg.transform.scale_by(pg.image.load('snowflake2.svg'), 0.1) # Importiamo il primo fiocco di neve
 
     snowflakes = [{'x': randint(0, w), 'y': randint(0, h)} for _ in range(100)] # Creiamo l' array per i fiocchi di neve
 
-    pg.mixer.music.load('Christmas_music2004.ogg')  # Importiamo la musica di natale
+    if random == 0:
+        pg.mixer.music.load('Christmas_music2004.ogg')  # Importiamo la musica di natale
+        pg.mixer.music.play(-1) # Avvia la riproduzione del brano
+    else:
+        pg.mixer.music.load('We_Wish_You_a_Merry_Christmas.ogg')  # Importiamo la musica di natale
+        pg.mixer.music.play(-1) # Avvia la riproduzione del brano     
 
-    pg.mixer.music.play(-1) # Avvia la riproduzione del brano
+    random = randint(0,1)
+  
 
-
+    
     while True:
         
         y = y + 1
@@ -50,9 +59,12 @@ def main():
         screen.blit(snow1, (x , y)) # Diciamo al programma che vogliamo visualizzare il fiocco
             
         # pg.display.flip()
-
-        for snowflake in snowflakes:    # Diciamo al programma che vogliamo visualizzare i fiocchi (100 in posizione random)
-            screen.blit(snow1, (snowflake['x'], snowflake['y'] + y))
+        if random == 0:
+            for snowflake in snowflakes:    # Diciamo al programma che vogliamo visualizzare i fiocchi (100 in posizione random)
+                screen.blit(snow1, (snowflake['x'], snowflake['y'] + y))
+        else:
+            for snowflake in snowflakes:    # Diciamo al programma che vogliamo visualizzare i fiocchi (100 in posizione random)
+                screen.blit(snow2, (snowflake['x'], snowflake['y'] + y))
 
 
         pg.display.update() # Diciamo al programma che deve aggiornare
